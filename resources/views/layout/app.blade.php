@@ -20,18 +20,28 @@
                             Home
                         </a>
                     </li>
+                    @auth
                     <li class="list-none">
                         <a class="outline-none hover:bg-white p-2 rounded hover:text-black smooth text-white" href="{{ route('user.dashboard') }}">
                             Dashboard
                         </a>
                     </li>
+                    @endauth
                 </ul>
                 <ul class="flex gap-5">
+                    @auth
                     <li class="list-none">
                         <a class="outline-none hover:bg-white p-2 rounded hover:text-black smooth text-white" href="{{ route('user.settings') }}">
                             {{ auth()->user()['data']['email'] }}
                         </a>
                     </li>
+                    @else
+                    <li class="list-none">
+                        <a class="outline-none hover:bg-white p-2 rounded hover:text-black smooth text-white" href="{{ route('user.login') }}">
+                            Login
+                        </a>
+                    </li>
+                    @endauth
                 </ul>
             </nav>
         </div>
