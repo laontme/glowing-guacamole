@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    box-sizing: border-box;
+    @apply font-mono;
+}
+
+.smooth {
+    @apply transition-all ease-in-out;
+}
+
+.smooth:hover {
+    @apply transition-all ease-in-out;
+}
+
+.smooth:active {
+    @apply transition-all ease-in-out;
+}
+
+.smooth:focus {
+    @apply transition-all ease-in-out;
+}

@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +29,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Auth::viaRequest('token', function (Request $request) {
+            $token = decrypt($request->session()->get('token'));
+            $res = Http::jg($token)->get('/user');
+
+            if ($res->ok()) {
+                $data = $res->json()['data'];
+                return collect([
+                    'data' => $data,
+                    'token' => $token,
+                ]);
+            }
+
+            return null;
+        });
     }
 }
