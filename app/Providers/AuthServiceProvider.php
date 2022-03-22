@@ -30,6 +30,10 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Auth::viaRequest('token', function (Request $request) {
+            if (!$request->session()->has('token')) {
+                return null;
+            }
+
             $token = decrypt($request->session()->get('token'));
             $res = Http::jg($token)->get('/user');
 
